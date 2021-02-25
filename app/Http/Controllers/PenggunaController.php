@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengguna;
+use App\Models\Jantina;
+use App\Models\Agensi;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PenggunaController extends Controller
 {
@@ -29,7 +32,22 @@ class PenggunaController extends Controller
      */
     public function create()
     {
-        return view('pengguna.create');
+        // SELECT * FROM jantina
+        $senaraiJantina = Jantina::get();
+
+        // SELECT * FROM agensi ORDER BY nama ASC
+        $senaraiAgensi = Agensi::orderBy('nama')->get();
+        // SELECT * FROM agensi WHERE status = true
+        // $senaraiAgensi = Agensi::where('status', true)->orderBy('nama')->get();
+        // SELECT * FROM agensi WHERE status = true AND id_kementerian = 1
+        // $senaraiAgensi = Agensi::where('status', true)->where('id_kementerian', 1)->orderBy('nama')->get();
+        // $senaraiAgensi = Agensi::where(['status' => true, 'id_kementerian' => 1])->orderBy('nama')->get();
+        // first(), firstOrFail(), firstOr(), get(), paginate(), simplePaginate(), sole()
+
+        return view('pengguna.create', [
+            'senaraiJantina' => $senaraiJantina,
+            'senaraiAgensi' => $senaraiAgensi
+        ]);
     }
 
     /**
@@ -40,7 +58,37 @@ class PenggunaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => [
+                'required',
+                'string',
+                'min:3',
+                'max:100'
+            ],
+            'no_kad_pengenalan' => [
+                'required',
+                'string',
+                'size:12'
+            ],
+            'jantina' => [
+                'required',
+                Rule::in(Jantina::pluck('id'))
+            ],
+            'agensi' => [
+                'required',
+                Rule::in(Agensi::pluck('id'))
+            ],
+            'emel' => [
+                'required',
+                'email',
+                'max:100'
+            ],
+            'no_telefon' => [
+                'required',
+                'string',
+                'max:14'
+            ]
+        ]);
     }
 
     /**

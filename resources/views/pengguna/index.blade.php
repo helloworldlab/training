@@ -8,30 +8,30 @@
 
 @section('isi_kandungan')
     <div class="container">
-        <div class="d-flex justify-content-between align-items-center border-bottom mb-5">
-            <h3 class="mt-3">Senarai Pengguna</h3>
-            <a href="{{ route('pengguna.create') }}" class="btn btn-primary">Pengguna Baru</a>
+        <div class="d-flex justify-content-between align-items-center border-bottom py-3 mb-3" style="height: 5.5rem;">
+            <h3 class="my-0 font-weight-bold">Senarai Pengguna</h3>
+            <a href="{{ route('pengguna.create') }}" class="btn btn-primary flex-shrink-0">Pengguna Baru</a>
         </div>
 
         <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-striped text-nowrap mb-0">
                 <thead>
                     <tr>
-                        <td>Bil.</td>
-                        <td>Nama</td>
-                        <td>No. Kad Pengenalan</td>
-                        <td>Emel</td>
-                        <td></td>
+                        <th class="border-0">Bil.</th>
+                        <th class="border-0">Nama</th>
+                        <th class="border-0">No. Kad Pengenalan</th>
+                        <th class="border-0">Emel</th>
+                        <th class="border-0"></th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($senaraiPengguna as $pengguna)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $pengguna->nama ?? '-' }}</td>
-                            <td>{{ $pengguna->no_kp ?? '-' }}</td>
-                            <td>{{ $pengguna->emel ?? '-' }}</td>
-                            <td class="text-right">
+                            <td class="align-middle">{{ $loop->iteration }}</td>
+                            <td class="align-middle">{{ $pengguna->nama ?? '-' }}</td>
+                            <td class="align-middle">{{ $pengguna->no_kp ?? '-' }}</td>
+                            <td class="align-middle">{{ $pengguna->emel ?? '-' }}</td>
+                            <td class="align-middle text-right">
                                 <div class="btn-group">
                                     <a href="{{ route('pengguna.show', $pengguna->id) }}" class="btn btn-outline-primary btn-sm">Butiran</a>
                                     <a href="{{ route('pengguna.edit', $pengguna->id) }}" class="btn btn-outline-primary btn-sm">Kemaskini</a>

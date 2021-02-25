@@ -2,7 +2,8 @@
 
 @section('isi_kandungan')
     <div class="container">
-        <h3 class="mt-3">Laman Utama</h3>
-        <hr>
+        <div class="d-flex justify-content-between align-items-center border-bottom py-3 mb-3" style="height: 5.5rem;">
+            <h3 class="my-0 font-weight-bold">Laman Utama</h3>
+        </div>
     </div>
 @endsection
