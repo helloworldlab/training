@@ -43,7 +43,7 @@
                     <div class="form-group">
                         <label class="font-weight-bold">Jantina&nbsp;<span class="text-danger">*</span></label>
                         <select name="jantina" class="form-control">
-                            <option disabled selected>SILA PILIH</option>
+                            <option disabled selected>Sila Pilih</option>
                             @foreach ($senaraiJantina as $jantina)
                                 <option value="{{ $jantina->id }}">{{ $jantina->nama }}</option>
                             @endforeach
@@ -54,7 +54,7 @@
                     <div class="form-group">
                         <label class="font-weight-bold">Agensi&nbsp;<span class="text-danger">*</span></label>
                         <select name="agensi" class="form-control">
-                            <option disabled selected>SILA PILIH</option>
+                            <option disabled selected>Sila Pilih</option>
                             @foreach ($senaraiAgensi as $agensi)
                                 <option value="{{ $agensi->id }}">{{ $agensi->nama }}</option>
                             @endforeach
