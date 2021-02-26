@@ -89,7 +89,7 @@
                 <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label class="font-weight-bold">Emel&nbsp;<span class="text-danger">*</span></label>
-                        <input class="form-control @error('emel') is-invalid @enderror" type="email" name="emel" value="{{ old('emel') }}">
+                        <input class="form-control @error('emel') is-invalid @enderror" type="email" name="emel" value="{{ old('emel', $pengguna->emel) }}">
                         @error('emel')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -100,7 +100,7 @@
                 <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label class="font-weight-bold">No. Telefon&nbsp;<span class="text-danger">*</span></label>
-                        <input class="form-control @error('no_telefon') is-invalid @enderror" type="text" name="no_telefon" value="{{ old('no_telefon') }}">
+                        <input class="form-control @error('no_telefon') is-invalid @enderror" type="text" name="no_telefon" value="{{ old('no_telefon', $pengguna->no_telefon) }}">
                         @error('no_telefon')
                             <div class="invalid-feedback">
                                 {{ $message }}

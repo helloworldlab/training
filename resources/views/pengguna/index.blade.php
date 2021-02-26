@@ -14,7 +14,7 @@
         </div>
 
         <div class="table-responsive">
-            <table class="table table-striped text-nowrap mb-0">
+            <table class="table table-striped text-nowrap">
                 <thead>
                     <tr>
                         <th class="border-0">Bil.</th>
@@ -35,7 +35,7 @@
                                 <div class="btn-group">
                                     <a href="{{ route('pengguna.show', $pengguna->id) }}" class="btn btn-outline-primary btn-sm">Butiran</a>
                                     <a href="{{ route('pengguna.edit', $pengguna->id) }}" class="btn btn-outline-primary btn-sm">Kemaskini</a>
-                                    <a href="{{ route('pengguna.destroy', $pengguna->id) }}" class="btn btn-outline-primary btn-sm">Hapus</a>
+                                    <a href="{{ route('pengguna.destroy', $pengguna->id) }}" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modal-hapus-rekod">Hapus</a>
                                 </div>
                             </td>
                         </tr>
@@ -52,8 +52,24 @@
     </div>
 @endsection
 
+@section('komponen')
+    @include('komponen.modal-hapus-rekod')
+@endsection
+
 @section('js')
     <script>
-
+        // Apabila dokumen HTML dimuat pada pelayar web
+        $(document).ready(function () {
+            $('#modal-hapus-rekod').on('show.bs.modal', function (event) {
+                // Dapatkan button yang ditekan
+                var button = $(event.relatedTarget);
+                // Dapatkan pautan pada button
+                var action = button.prop('href');
+                // Modal yang dipaparkan
+                var modal = $(this);
+                // Cari form-hapus-rekod pada modal dan setkan property dengan pautan
+                modal.find('#form-hapus-rekod').prop('action', action);
+            });
+        });
     </script>
 @endsection

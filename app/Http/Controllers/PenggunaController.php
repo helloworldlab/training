@@ -212,6 +212,8 @@ class PenggunaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Pengguna::destroy($id);
+
+        return back();
     }
 }
