@@ -28,12 +28,12 @@
                     <hr>
                     <div>
                         <strong class="d-block">Jantina</strong>
-                        <span>-</span>
+                        <span>{{ $pengguna->nama_jantina }}</span>
                     </div>
                     <hr>
                     <div>
                         <strong class="d-block">Agensi</strong>
-                        <span>-</span>
+                        <span>{{ $pengguna->nama_agensi }}</span>
                     </div>
                     <hr>
                     <div>
@@ -52,12 +52,12 @@
                 <div class="card card-body mb-3">
                     <div>
                         <strong class="d-block">Tarikh Cipta</strong>
-                        <span>{{ $pengguna->tarikh_cipta }}</span>
+                        <span>{{ $pengguna->tarikh_cipta->format('d/m/Y H:i A') }}</span>
                     </div>
                     <hr>
                     <div>
                         <strong class="d-block">Tarikh Kemaskini</strong>
-                        <span>{{ $pengguna->tarikh_kemaskini }}</span>
+                        <span>{{ $pengguna->tarikh_kemaskini->format('d/m/Y H:i A') }}</span>
                     </div>
                 </div>
             </div>

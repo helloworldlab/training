@@ -116,7 +116,12 @@ class PenggunaController extends Controller
     {
         // SELECT * FROM pengguna WHERE id = $id
         // $pengguna = Pengguna::where('id', $id)->first();
-        $pengguna = Pengguna::find($id);
+        $pengguna = Pengguna::query()
+            ->select('pengguna.*', 'jantina.nama as nama_jantina', 'agensi.nama as nama_agensi')
+            ->leftJoin('jantina', 'pengguna.id_jantina', 'jantina.id')
+            ->leftJoin('agensi', 'pengguna.id_agensi', 'agensi.id')
+            ->where('pengguna.id', $id)
+            ->first();
 
         return view('pengguna.show', [
             'pengguna' => $pengguna
@@ -131,7 +136,17 @@ class PenggunaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pengguna = Pengguna::find($id);
+
+        $senaraiJantina = Jantina::get();
+
+        $senaraiAgensi = Agensi::orderBy('nama')->get();
+
+        return view('pengguna.edit', [
+            'pengguna' => $pengguna,
+            'senaraiJantina' => $senaraiJantina,
+            'senaraiAgensi' => $senaraiAgensi
+        ]);
     }
 
     /**
