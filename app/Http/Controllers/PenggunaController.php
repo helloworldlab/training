@@ -214,6 +214,9 @@ class PenggunaController extends Controller
     {
         Pengguna::destroy($id);
 
+        session()->flash('notifikasi_sistem', 'Rekod pengguna berjaya dihapuskan.');
+        // session()->flash('class_notifikasi_sistem', 'alert-danger');
+
         return back();
     }
 }

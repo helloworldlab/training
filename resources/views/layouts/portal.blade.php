@@ -9,6 +9,7 @@
     </head>
     <body>
         @include('komponen.navbar', ['tema' => 'light'])
+        @include('komponen.notifikasi-sistem')
 
         <main class="mb-5">@yield('isi_kandungan')</main>
 
