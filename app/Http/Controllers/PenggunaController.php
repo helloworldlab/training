@@ -158,7 +158,50 @@ class PenggunaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama' => [
+                'required',
+                'string',
+                'min:3',
+                'max:100'
+            ],
+            'no_kad_pengenalan' => [
+                'required',
+                'string',
+                'size:12'
+            ],
+            'jantina' => [
+                'required',
+                Rule::in(Jantina::pluck('id'))
+            ],
+            'agensi' => [
+                'required',
+                Rule::in(Agensi::pluck('id'))
+            ],
+            'emel' => [
+                'required',
+                'email',
+                'max:100'
+            ],
+            'no_telefon' => [
+                'required',
+                'string',
+                'max:14'
+            ]
+        ]);
+
+        $pengguna = Pengguna::find($id);
+
+        $pengguna->update([
+            'nama'          => $request->input('nama'),
+            'no_kp'         => $request->input('no_kad_pengenalan'),
+            'id_jantina'    => $request->input('jantina'),
+            'id_agensi'     => $request->input('agensi'),
+            'emel'          => $request->input('emel'),
+            'no_telefon'    => $request->input('no_telefon'),
+        ]);
+
+        return redirect()->route('pengguna.index');
     }
 
     /**

@@ -29,7 +29,7 @@
                 <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label class="font-weight-bold">Nama&nbsp;<span class="text-danger">*</span></label>
-                        <input class="form-control @error('nama') is-invalid @enderror" type="text" name="nama" value="{{ old('nama') }}" autofocus>
+                        <input class="form-control @error('nama') is-invalid @enderror" type="text" name="nama" value="{{ old('nama', $pengguna->nama) }}" autofocus>
                         @error('nama')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -40,7 +40,7 @@
                 <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label class="font-weight-bold">No. Kad Pengenalan&nbsp;<span class="text-danger">*</span></label>
-                        <input class="form-control @error('no_kad_pengenalan') is-invalid @enderror" type="text" name="no_kad_pengenalan" value="{{ old('no_kad_pengenalan') }}">
+                        <input class="form-control @error('no_kad_pengenalan') is-invalid @enderror" type="text" name="no_kad_pengenalan" value="{{ old('no_kad_pengenalan', $pengguna->no_kp) }}">
                         @error('no_kad_pengenalan')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -57,7 +57,7 @@
                         <select name="jantina" class="form-control @error('jantina') is-invalid @enderror">
                             <option disabled selected>Sila Pilih</option>
                             @foreach ($senaraiJantina as $jantina)
-                                <option value="{{ $jantina->id }}" {{ $jantina->id == old('jantina') ? 'selected' : null }}>{{ $jantina->nama }}</option>
+                                <option value="{{ $jantina->id }}" {{ $jantina->id == old('jantina', $pengguna->id_jantina) ? 'selected' : null }}>{{ $jantina->nama }}</option>
                             @endforeach
                         </select>
                         @error('jantina')
@@ -73,7 +73,7 @@
                         <select name="agensi" class="form-control @error('agensi') is-invalid @enderror">
                             <option disabled selected>Sila Pilih</option>
                             @foreach ($senaraiAgensi as $agensi)
-                                <option value="{{ $agensi->id }}" {{ $agensi->id == old('agensi') ? 'selected' : null }}>{{ $agensi->nama }}</option>
+                                <option value="{{ $agensi->id }}" {{ $agensi->id == old('agensi', $pengguna->id_agensi) ? 'selected' : null }}>{{ $agensi->nama }}</option>
                             @endforeach
                         </select>
                         @error('agensi')
