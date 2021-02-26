@@ -55,7 +55,7 @@
                         <select name="jantina" class="form-control @error('jantina') is-invalid @enderror">
                             <option disabled selected>Sila Pilih</option>
                             @foreach ($senaraiJantina as $jantina)
-                                <option value="{{ $jantina->id }}">{{ $jantina->nama }}</option>
+                                <option value="{{ $jantina->id }}" {{ $jantina->id == old('jantina') ? 'selected' : null }}>{{ $jantina->nama }}</option>
                             @endforeach
                         </select>
                         @error('jantina')
@@ -71,7 +71,7 @@
                         <select name="agensi" class="form-control @error('agensi') is-invalid @enderror">
                             <option disabled selected>Sila Pilih</option>
                             @foreach ($senaraiAgensi as $agensi)
-                                <option value="{{ $agensi->id }}">{{ $agensi->nama }}</option>
+                                <option value="{{ $agensi->id }}" {{ $agensi->id == old('agensi') ? 'selected' : null }}>{{ $agensi->nama }}</option>
                             @endforeach
                         </select>
                         @error('agensi')

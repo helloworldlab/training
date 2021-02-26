@@ -47,6 +47,8 @@
                 </tbody>
             </table>
         </div>
+
+        {{ $senaraiPengguna->links() }}
     </div>
 @endsection
 

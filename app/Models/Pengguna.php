@@ -12,7 +12,9 @@ class Pengguna extends Model
     // Digunakan untuk mewakili nama table apa
     protected $table = 'pengguna';
     // Nama lain kolum created at;
-    const CREATED_AT = 'tarikh_rekod';
+    const CREATED_AT = 'tarikh_cipta';
     // Nama lain kolum updated_at
     const UPDATED_AT = 'tarikh_kemaskini';
+    // Disabled mass assignment
+    protected $guarded = false;
 }

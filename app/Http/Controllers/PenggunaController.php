@@ -18,7 +18,10 @@ class PenggunaController extends Controller
     public function index()
     {
         // SELECT * FROM pengguna
-        $senaraiPengguna = Pengguna::get();
+        $senaraiPengguna = Pengguna::query()
+            ->select('pengguna.*', 'agensi.nama as nama_agensi')
+            ->leftJoin('agensi', 'pengguna.id_agensi', 'agensi.id')
+            ->paginate(10);
 
         return view('pengguna.index', [
             'senaraiPengguna' => $senaraiPengguna
@@ -89,6 +92,18 @@ class PenggunaController extends Controller
                 'max:14'
             ]
         ]);
+
+        Pengguna::create([
+            'nama'          => $request->input('nama'),
+            'no_kp'         => $request->input('no_kad_pengenalan'),
+            'id_jantina'    => $request->input('jantina'),
+            'id_agensi'     => $request->input('agensi'),
+            'emel'          => $request->input('emel'),
+            'kata_laluan'   => bcrypt('P@ssw0rd'),
+            'no_telefon'    => $request->input('no_telefon'),
+        ]);
+
+        return redirect()->route('pengguna.index');
     }
 
     /**
@@ -99,7 +114,13 @@ class PenggunaController extends Controller
      */
     public function show($id)
     {
-        //
+        // SELECT * FROM pengguna WHERE id = $id
+        // $pengguna = Pengguna::where('id', $id)->first();
+        $pengguna = Pengguna::find($id);
+
+        return view('pengguna.show', [
+            'pengguna' => $pengguna
+        ]);
     }
 
     /**
