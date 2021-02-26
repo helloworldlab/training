@@ -159,11 +159,11 @@ class PenggunaController extends Controller
     public function update(Request $request, $id)
     {
         if ($request->query('halaman') == 'profil') {
-            $this->formKemaskiniProfil($request, $id);
+            return $this->formKemaskiniProfil($request, $id);
         }
 
         if ($request->query('halaman') == 'kata-laluan') {
-            $this->formKemaskiniKataLaluan($request, $id);
+            return $this->formKemaskiniKataLaluan($request, $id);
         }
     }
 
