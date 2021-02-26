@@ -158,6 +158,33 @@ class PenggunaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if ($request->query('halaman') == 'profil') {
+            $this->formKemaskiniProfil($request, $id);
+        }
+
+        if ($request->query('halaman') == 'kata-laluan') {
+            $this->formKemaskiniKataLaluan($request, $id);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        Pengguna::destroy($id);
+
+        session()->flash('notifikasi_sistem', 'Rekod pengguna berjaya dihapuskan.');
+        // session()->flash('class_notifikasi_sistem', 'alert-danger');
+
+        return back();
+    }
+
+    public function formKemaskiniProfil($request, $id)
+    {
         $request->validate([
             'nama' => [
                 'required',
@@ -204,19 +231,8 @@ class PenggunaController extends Controller
         return redirect()->route('pengguna.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function formKemaskiniKataLaluan($request, $id)
     {
-        Pengguna::destroy($id);
 
-        session()->flash('notifikasi_sistem', 'Rekod pengguna berjaya dihapuskan.');
-        // session()->flash('class_notifikasi_sistem', 'alert-danger');
-
-        return back();
     }
 }

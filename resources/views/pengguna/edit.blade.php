@@ -10,6 +10,15 @@
             <h3 class="my-0 font-weight-bold">Kemaskini Butiran</h3>
         </div>
 
+        <ul class="nav nav-tabs mb-3">
+            <li class="nav-item">
+                <a class="nav-link {{ request()->query('halaman') == 'profil' || empty(request()->query('halaman')) ? 'active' : null }}" href="{{ route('pengguna.edit', ['pengguna' => $pengguna->id, 'halaman' => 'profil']) }}">Profil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->query('halaman') == 'kata-laluan' ? 'active' : null }}" href="{{ route('pengguna.edit', ['pengguna' => $pengguna->id, 'halaman' => 'kata-laluan']) }}">Kata Laluan</a>
+            </li>
+        </ul>
+
         @if ($errors->any())
             <div class="alert alert-danger mb-5">
                 <ul class="mb-0">
@@ -20,105 +29,14 @@
             </div>
         @endif
 
-        <form action="{{ route('pengguna.update', $pengguna->id) }}" method="post">
-            @csrf
-            {{-- Form Method Spoofing --}}
-            @method('put')
+        @if (request()->query('halaman') == 'profil' || empty(request()->query('halaman')))
+            @include('pengguna.subkomponen.form-kemaskini-profil')
+        @endif
 
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label class="font-weight-bold">Nama&nbsp;<span class="text-danger">*</span></label>
-                        <input class="form-control @error('nama') is-invalid @enderror" type="text" name="nama" value="{{ old('nama', $pengguna->nama) }}" autofocus>
-                        @error('nama')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label class="font-weight-bold">No. Kad Pengenalan&nbsp;<span class="text-danger">*</span></label>
-                        <input class="form-control @error('no_kad_pengenalan') is-invalid @enderror" type="text" name="no_kad_pengenalan" value="{{ old('no_kad_pengenalan', $pengguna->no_kp) }}">
-                        @error('no_kad_pengenalan')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                </div>
-            </div>
+        @if (request()->query('halaman') == 'kata-laluan')
+            @include('pengguna.subkomponen.form-kemaskini-kata-laluan')
+        @endif
 
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label class="font-weight-bold">Jantina&nbsp;<span class="text-danger">*</span></label>
-                        <select name="jantina" class="form-control @error('jantina') is-invalid @enderror">
-                            <option disabled selected>Sila Pilih</option>
-                            @foreach ($senaraiJantina as $jantina)
-                                <option value="{{ $jantina->id }}" {{ $jantina->id == old('jantina', $pengguna->id_jantina) ? 'selected' : null }}>{{ $jantina->nama }}</option>
-                            @endforeach
-                        </select>
-                        @error('jantina')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label class="font-weight-bold">Agensi&nbsp;<span class="text-danger">*</span></label>
-                        <select name="agensi" class="form-control @error('agensi') is-invalid @enderror">
-                            <option disabled selected>Sila Pilih</option>
-                            @foreach ($senaraiAgensi as $agensi)
-                                <option value="{{ $agensi->id }}" {{ $agensi->id == old('agensi', $pengguna->id_agensi) ? 'selected' : null }}>{{ $agensi->nama }}</option>
-                            @endforeach
-                        </select>
-                        @error('agensi')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label class="font-weight-bold">Emel&nbsp;<span class="text-danger">*</span></label>
-                        <input class="form-control @error('emel') is-invalid @enderror" type="email" name="emel" value="{{ old('emel', $pengguna->emel) }}">
-                        @error('emel')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label class="font-weight-bold">No. Telefon&nbsp;<span class="text-danger">*</span></label>
-                        <input class="form-control @error('no_telefon') is-invalid @enderror" type="text" name="no_telefon" value="{{ old('no_telefon', $pengguna->no_telefon) }}">
-                        @error('no_telefon')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="d-flex justify-content-between align-items-center">
-                <a href="{{ route('pengguna.index') }}" class="btn btn-outline-primary">Kembali</a>
-                <div>
-                    <button class="btn btn-outline-primary" type="reset">Bersih</button>
-                    <button class="btn btn-primary" type="submit">Simpan Butiran</button>
-                </div>
-            </div>
-        </form>
     </div>
 @endsection
 
