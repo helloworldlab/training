@@ -11,6 +11,8 @@ class Pengguna extends Model
 
     protected $table = 'pengguna';
 
+    protected $guarded = false;
+
     const CREATED_AT = 'tarikh_direkod';
 
     const UPDATED_AT = 'tarikh_dikemaskini';

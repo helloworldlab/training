@@ -3,22 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Password;
 use App\Models\Pengguna;
-use Illuminate\Support\Facades\Session;
 
 class PenggunaController extends Controller
 {
     public function index()
     {
-        $senaraiNamaPengguna = [
-            'Ali',
-            'Abu'
-        ];
+        // SELECT * FROM pengguna ORDER BY nama DESC
+        // SELECT * FROM pengguna WHERE nama LIKE ? OR emel LIKE ? ORDER BY nama DESC
+        $senaraiPengguna = Pengguna::query()
+            ->when(request()->filled('carian'), function ($query) {
+                $termaCarian = request()->query('carian');
+                $query
+                    ->where('nama', 'LIKE', "%{$termaCarian}%")
+                    ->orWhere('emel', 'LIKE', "%{$termaCarian}%");
+            })
+            ->orderBy('nama', 'desc')
+            ->paginate();
     
         return view('pengguna.index', [
-            'senaraiNamaPengguna' => $senaraiNamaPengguna
+            'senaraiPengguna' => $senaraiPengguna
         ]);
     }
 
@@ -54,50 +59,36 @@ class PenggunaController extends Controller
         ]);
 
         // 2. Masukkan data ke dalam database
-        // Cara 1 - Placeholder
-        // $sql = 'INSERT INTO pengguna (nama, emel, kata_laluan) VALUES (?, ?, ?)';
-        
-        // DB::insert($sql, [
-        //     $request->input('nama'),
-        //     $request->input('emel'),
-        //     bcrypt($request->input('kata_laluan'))
-        // ]);
-
-        // Cara 2 - Named placeholder
-        // $sql = 'INSERT INTO pengguna (nama, emel, kata_laluan) VALUES (:nama, :emel, :kata_laluan)';
-
-        // DB::insert($sql, [
-        //     'nama'          => $request->input('nama'),
-        //     'emel'          => $request->input('emel'),
-        //     'kata_laluan'   => bcrypt($request->input('kata_laluan'))
-        // ]);
-
-        // Cara 3 - Model
         Pengguna::create([
             'nama'          => $request->input('nama'),
             'emel'          => $request->input('emel'),
             'kata_laluan'   => bcrypt($request->input('kata_laluan'))
         ]);
 
-        // Cara 4
-        // $pdo = DB::getPdo();
-        // $sql = 'INSERT INTO pengguna (nama, emel, kata_laluan) VALUES (:nama, :emel, :kata_laluan)';
-        // $pdo->prepare($sql);
-        // $pdo->bindColumn(':nama', $request->input('nama'));
-        // $pdo->bindColumn(':emel', $request->input('emel'));
-        // $pdo->bindColumn(':kata_laluan', bcrypt($request->input('kata_laluan')));
-        // $pdo->execute();
-
         // 3. Flash mesej sistem
-
-        // Cara 1 - Menggunakan Facade
-        Session::flash('notifikasi_sistem', 'Maklumat pengguna berjaya disimpan.');
-
-        // Cara 2 - Menggunakan Helper Function
         session()->flash('notifikasi_sistem', 'Maklumat pengguna berjaya disimpan.');
 
         // 4. Redirect ke halaman yang dikehendaki
-        // http://localhost:8000/pengguna
-        return redirect()->url('pengguna');
+        return redirect()->route('pengguna.index');
+    }
+
+    public function show($id)
+    {
+        // SELECT * FROM pengguna WHERE id = ?
+        $pengguna = Pengguna::find($id);
+
+        return view('pengguna.show', [
+            'pengguna' => $pengguna
+        ]);
+    }
+
+    public function edit($id)
+    {
+        // SELECT * FROM pengguna WHERE id = ?
+        $pengguna = Pengguna::find($id);
+
+        return view('pengguna.edit', [
+            'pengguna' => $pengguna
+        ]);
     }
 }

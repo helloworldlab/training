@@ -4,7 +4,7 @@
     <div class="container">
 
         <section class="d-flex justify-content-between align-items-center mb-4 pb-4 border-bottom">
-            <h3 class="mb-3">Pengguna Baru</h3>
+            <h3 class="mb-3">Kemaskini Butiran Pengguna</h3>
         </section>
 
         {{-- @dump($errors) --}}
@@ -21,15 +21,16 @@
             </div>
         @endif
 
-        <form action="{{ url('pengguna') }}" method="post">
+        <form action="{{ route('pengguna.update', ['pengguna' => $pengguna->id]) }}" method="post">
 
             @csrf
+            @method('put')
 
             <div class="row">
                 <div class="col-12 col-md-6">
                     <div class="mb-3">
                         <label class="form-label" for="input-nama">Nama</label>
-                        <input class="form-control @error('nama') is-invalid @enderror" id="input-nama" type="text" name="nama" value="{{ old('nama') }}" autofocus>
+                        <input class="form-control @error('nama') is-invalid @enderror" id="input-nama" type="text" name="nama" value="{{ old('nama', $pengguna->nama) }}" autofocus>
                         @error('nama')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -38,7 +39,7 @@
                 <div class="col-12 col-md-6">
                     <div class="mb-3">
                         <label class="form-label" for="input-emel">Emel</label>
-                        <input class="form-control @error('emel') is-invalid @enderror" id="input-emel" type="email" name="emel" value="{{ old('emel') }}">
+                        <input class="form-control @error('emel') is-invalid @enderror" id="input-emel" type="email" name="emel" value="{{ old('emel', $pengguna->emel) }}">
                         @error('nama')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
