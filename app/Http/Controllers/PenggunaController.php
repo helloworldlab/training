@@ -45,7 +45,7 @@ class PenggunaController extends Controller
             ],
             'kata_laluan' => [
                 'required',
-                Password::min(8)->mixedCase()->symbols()->uncompromised()
+                Password::min(8)
             ],
             'pengesahan_kata_laluan' => [
                 'required',
@@ -55,22 +55,22 @@ class PenggunaController extends Controller
 
         // 2. Masukkan data ke dalam database
         // Cara 1 - Placeholder
-        $sql = 'INSERT INTO pengguna (nama, emel, kata_laluan) VALUES (?, ?, ?)';
+        // $sql = 'INSERT INTO pengguna (nama, emel, kata_laluan) VALUES (?, ?, ?)';
         
-        DB::insert($sql, [
-            $request->input('nama'),
-            $request->input('emel'),
-            bcrypt($request->input('kata_laluan'))
-        ]);
+        // DB::insert($sql, [
+        //     $request->input('nama'),
+        //     $request->input('emel'),
+        //     bcrypt($request->input('kata_laluan'))
+        // ]);
 
         // Cara 2 - Named placeholder
-        $sql = 'INSERT INTO pengguna (nama, emel, kata_laluan) VALUES (:nama, :emel, :kata_laluan)';
+        // $sql = 'INSERT INTO pengguna (nama, emel, kata_laluan) VALUES (:nama, :emel, :kata_laluan)';
 
-        DB::insert($sql, [
-            'nama'          => $request->input('nama'),
-            'emel'          => $request->input('emel'),
-            'kata_laluan'   => bcrypt($request->input('kata_laluan'))
-        ]);
+        // DB::insert($sql, [
+        //     'nama'          => $request->input('nama'),
+        //     'emel'          => $request->input('emel'),
+        //     'kata_laluan'   => bcrypt($request->input('kata_laluan'))
+        // ]);
 
         // Cara 3 - Model
         Pengguna::create([
@@ -80,13 +80,13 @@ class PenggunaController extends Controller
         ]);
 
         // Cara 4
-        $pdo = DB::getPdo();
-        $sql = 'INSERT INTO pengguna (nama, emel, kata_laluan) VALUES (:nama, :emel, :kata_laluan)';
-        $pdo->prepare($sql);
-        $pdo->bindColumn(':nama', $request->input('nama'));
-        $pdo->bindColumn(':emel', $request->input('emel'));
-        $pdo->bindColumn(':kata_laluan', bcrypt($request->input('kata_laluan')));
-        $pdo->execute();
+        // $pdo = DB::getPdo();
+        // $sql = 'INSERT INTO pengguna (nama, emel, kata_laluan) VALUES (:nama, :emel, :kata_laluan)';
+        // $pdo->prepare($sql);
+        // $pdo->bindColumn(':nama', $request->input('nama'));
+        // $pdo->bindColumn(':emel', $request->input('emel'));
+        // $pdo->bindColumn(':kata_laluan', bcrypt($request->input('kata_laluan')));
+        // $pdo->execute();
 
         // 3. Flash mesej sistem
 

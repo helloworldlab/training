@@ -14,10 +14,10 @@ Route::get('hubungi-kami', function () {
 });
 
 // GET localhost:8000/pengguna
-Route::get('pengguna', [PenggunaController::class, 'index']);
+Route::get('pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
 
 // GET localhost:8000/pengguna/create
-Route::get('pengguna/create', [PenggunaController::class, 'create']);
+Route::get('pengguna/create', [PenggunaController::class, 'create'])->name('pengguna.create');
 
 // POST localhost:8000/pengguna
-Route::post('pengguna', [PenggunaController::class, 'store']);
+Route::post('pengguna', [PenggunaController::class, 'store'])->name('pengguna.store');
