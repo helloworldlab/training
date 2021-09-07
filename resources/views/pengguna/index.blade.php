@@ -1,18 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <table>
-        @foreach ($senaraiPengguna as $nama)
-            <tr>
-                <td>{{ $nama ?? 'Tiada maklumat' }}</td>
-            </tr>
-        @endforeach
-    </table>
-</body>
-</html>
+@extends('layout.penuh')
+
+@section('isi_kandungan')
+    <div class="container">
+        
+        <h3>Senarai Pengguna</h3>
+
+        <table class="table">
+            @foreach ($senaraiNamaPengguna as $namaPengguna)
+                <tr>
+                    <td>{{ $namaPengguna }}</td>
+                </tr>
+            @endforeach
+        </table>
+
+    </div>
+@endsection
