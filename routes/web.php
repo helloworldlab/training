@@ -22,14 +22,14 @@ Route::get('pengguna/create', [PenggunaController::class, 'create'])->name('peng
 // POST localhost:8000/pengguna
 Route::post('pengguna', [PenggunaController::class, 'store'])->name('pengguna.store');
 
-// GET localhost:8000/pengguna/{id_pengguna}
+// GET localhost:8000/pengguna/{pengguna}
 Route::get('pengguna/{pengguna}', [PenggunaController::class, 'show'])->name('pengguna.show');
 
-// GET localhost:8000/pengguna/{id_pengguna}/edit
+// GET localhost:8000/pengguna/{pengguna}/edit
 Route::get('pengguna/{pengguna}/edit', [PenggunaController::class, 'edit'])->name('pengguna.edit');
 
-// PUT localhost:8000/pengguna/{id_pengguna}
+// PUT localhost:8000/pengguna/{pengguna}
 Route::put('pengguna/{pengguna}', [PenggunaController::class, 'update'])->name('pengguna.update');
 
-// DELETE localhost:8000/pengguna/{id_pengguna}
+// DELETE localhost:8000/pengguna/{pengguna}
 Route::delete('pengguna/{pengguna}', [PenggunaController::class, 'destroy'])->name('pengguna.destroy');

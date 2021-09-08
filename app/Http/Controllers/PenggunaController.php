@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
 use App\Models\Pengguna;
+use Illuminate\Validation\Rule;
+use Vinkla\Hashids\Facades\Hashids;
 
 class PenggunaController extends Controller
 {
@@ -46,7 +48,8 @@ class PenggunaController extends Controller
             'emel' => [
                 'required',
                 'email',
-                'max:100'
+                'max:100',
+                'unique:pengguna,emel'
             ],
             'kata_laluan' => [
                 'required',
@@ -72,8 +75,11 @@ class PenggunaController extends Controller
         return redirect()->route('pengguna.index');
     }
 
-    public function show($id)
+    public function show($encodedId)
     {
+        // Decode encoded id
+        $id = Hashids::decode($encodedId)[0];
+
         // SELECT * FROM pengguna WHERE id = ?
         $pengguna = Pengguna::find($id);
 
@@ -82,13 +88,67 @@ class PenggunaController extends Controller
         ]);
     }
 
-    public function edit($id)
+    public function edit($encodedId)
     {
+        // Decode encoded id
+        $id = Hashids::decode($encodedId)[0];
+
         // SELECT * FROM pengguna WHERE id = ?
         $pengguna = Pengguna::find($id);
 
         return view('pengguna.edit', [
             'pengguna' => $pengguna
         ]);
+    }
+
+    public function update(Request $request, $encodedId)
+    {
+        // 0.  Decode encoded id
+        $id = Hashids::decode($encodedId)[0];
+
+        // 1. Validation
+        $request->validate([
+            'nama' => [
+                'required',
+                'max:100'
+            ],
+            'emel' => [
+                'required',
+                'email',
+                'max:100',
+                Rule::unique('pengguna', 'emel')->ignore($id)
+            ],
+            'kata_laluan' => [
+                'nullable',
+                Password::min(8)
+            ],
+            'pengesahan_kata_laluan' => [
+                'nullable',
+                'same:kata_laluan'
+            ]
+        ]);
+
+        // 2. Dapatkan data yang ingin dikemaskini
+        $pengguna = Pengguna::find($id);
+
+        // 3. Kemaskini rekod pengguna
+        $data = [
+            'nama'          => $request->input('nama'),
+            'emel'          => $request->input('emel'),
+        ];
+
+        if ($request->filled('kata_laluan')) {
+            $data = $data + [
+                'kata_laluan'   =>  bcrypt($request->input('kata_laluan'))
+            ];
+        }
+
+        $pengguna->update($data);
+
+        // 4. Flash mesej pada pengguna
+        session()->flash('notifikasi_sistem', 'Butiran pengguna berjaya dikemaskini.');
+
+        // 5. Redirect pengguna kepada halaman senarai pengguna
+        return redirect()->route('pengguna.index');
     }
 }

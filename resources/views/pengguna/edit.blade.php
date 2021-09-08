@@ -21,7 +21,7 @@
             </div>
         @endif
 
-        <form action="{{ route('pengguna.update', ['pengguna' => $pengguna->id]) }}" method="post">
+        <form action="{{ route('pengguna.update', ['pengguna' => Hashids::encode($pengguna->id)]) }}" method="post">
 
             @csrf
             @method('put')

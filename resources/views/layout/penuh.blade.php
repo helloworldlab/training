@@ -32,6 +32,15 @@
             </div>
         </nav>
 
+        @if (session()->has('notifikasi_sistem'))
+            <div class="container">
+                <div class="alert alert-success alert-dismissible fade show">
+                    {{ session('notifikasi_sistem') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        @endif
+
         @yield('isi_kandungan')
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>

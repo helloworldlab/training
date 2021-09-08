@@ -4,7 +4,7 @@
     <div class="container">
         <section class="d-flex justify-content-between align-items-center mb-4 pb-4 border-bottom">
             <h3 class="mb-3">Butiran Pengguna</h3>
-            <a class="btn btn-primary" href="">Kemaskini</a>
+            <a class="btn btn-primary" href="{{ route('pengguna.edit', ['pengguna' => Hashids::encode($pengguna->id)]) }}">Kemaskini</a>
         </section>
 
         <div class="row">
