@@ -151,4 +151,15 @@ class PenggunaController extends Controller
         // 5. Redirect pengguna kepada halaman senarai pengguna
         return redirect()->route('pengguna.index');
     }
+
+    public function destroy($encodedId)
+    {
+        $id = Hashids::decode($encodedId)[0];
+
+        Pengguna::destroy($id);
+
+        session()->flash('notifikasi_sistem', 'Butiran pengguna berjaya dihapuskan.');
+
+        return back();
+    }
 }
